@@ -3,10 +3,10 @@
 #hilobar(style='display:none')
 
   .hiloContents.hidden-xs
-    a.hiloLink(href='hiloUrl') hilo
+    a.hiloLink(href='/') hilo
     .actions
-      a.hiloClose(href='destUrl') ×
-      a.hiloShare(href='hiloShare')
+      a.hiloClose(href='{{ trustSrc(srcSettings.destUrl) }}') ×
+      a.hiloShare(target='_blank', href='{{ srcSettings.shareUrl_ }}')
         span.glyphicon.glyphicon-retweet
     span.hiloProfilePhoto
       a(target='_blank', href='{{ srcSettings.twitterUrl }}')
@@ -30,10 +30,10 @@
             button.btn.btn-primary.btn-lg.hiloGo(type='button') {{ srcSettings.submitBtnText }}
 
   .hiloContents.visible-xs
-    a.hiloLink(href='hiloUrl') hilo
+    a.hiloLink(href='/') hilo
     .actions
-      a.hiloClose(href='destUrl') ×
-      a.hiloShare(href='hiloShare')
+      a.hiloClose(href='{{ trustSrc(srcSettings.destUrl) }}') ×
+      a.hiloShare(target='_blank', href='{{ srcSettings.shareUrl_ }}')
         span.glyphicon.glyphicon-retweet
     span.hiloMessageBox
       span.hiloAuthor
@@ -55,7 +55,7 @@
 
 
 .aspect-ratio
-  iframe(ng-src='{{srcSettings.destUrl}}', frameborder='0')
+  iframe(ng-src='{{ trustSrc(srcSettings.destUrl) }}', frameborder='0')
 
 script.
   $(document).ready(function() {

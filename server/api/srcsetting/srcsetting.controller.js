@@ -20,6 +20,15 @@ exports.show = function(req, res) {
   });
 };
 
+// Get a single srcsetting by shortCode
+exports.showByShortcode = function(req, res) {
+  Srcsetting.findOne({ shortCode: req.params.code }, function (err, srcsetting) {
+    if(err) { return handleError(res, err); }
+    if(!srcsetting) { return res.status(404).json({ success: false, code: 404, message: 'Shortcode not found'}); }
+    return res.json(srcsetting);
+  });
+};
+
 // Creates a new srcsetting in the DB.
 exports.create = function(req, res) {
   Srcsetting.create(req.body, function(err, srcsetting) {
