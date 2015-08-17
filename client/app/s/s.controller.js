@@ -5,8 +5,6 @@ angular.module('hiloApp')
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
 
-    console.log('shortCode', $scope.shortCode);
-
     // $scope.srcSettings = {
     //   delay: 0,
     //   twitterUrl: '//twitter.com/ectsang',
@@ -19,38 +17,18 @@ angular.module('hiloApp')
     //   submitBtnText: 'Go',
     //   destUrl: $sce.trustAsResourceUrl('http://lenglead.com')
     // };
-    /*
-    {
-        "_id" : ObjectId("55d06ce1daad17fae9fded94"),
-        "shortCode" : "aabb",
-        "delay" : 0,
-        "twitterUser" : "ectsang",
-        "twitterUrl" : "//twitter.com/ectsang",
-        "twitterProfilePicUrl" : "//pbs.twimg.com/profile_images/546840198848315392/dBcij4uc_bigger.jpeg",
-        "author" : "Eric Tsang",
-        "theMessage" : "Keep this message short and succinct. under 100 characters long and not really much longer than that.",
-        "actionBtnText" : " Next >",
-        "ctaText" : "Where to send your free bonus?",
-        "inputPlaceholder" : "Your Email",
-        "submitBtnText" : "Go",
-        "destUrl" : "//lenglead.com",
-        "shareUrl" : {
-            "text" : "Hi, you have something in your teeth",
-            "url" : "localhost:9000/s/aabb",
-            "hashtags" : [
-                "joking",
-                "idiot"
-            ],
-            "via" : "ectsang"
-        }
-    }
-    */
 
     /**
      * Returns the trusted src for jade to parse
      */
     $scope.trustSrc = function (src) {
-      return $sce.trustAsResourceUrl(src);
+      // strip https, http
+      if (src) {
+        src = src.replace('https://', '//').replace('http://', '//');
+        return $sce.trustAsResourceUrl(src);
+      } else {
+        return;
+      }
     }
 
     /**
@@ -77,6 +55,7 @@ angular.module('hiloApp')
         .success(function (result) {
           $scope.srcSettings = result;
           $scope.srcSettings.shareUrl_ = buildShareUrl($scope.srcSettings.shareUrl);
+
           console.log('result', $scope.srcSettings);
         })
         .error(function (err) {

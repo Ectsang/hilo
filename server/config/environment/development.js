@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/hilo-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
