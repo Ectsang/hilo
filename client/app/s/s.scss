@@ -1,0 +1,125 @@
+body {font-family: 'Open Sans', sans-serif;}
+
+/* iframe */
+iframe { width:100%; }
+.aspect-ratio {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 200%;
+}
+.aspect-ratio iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0; top: 0;
+}
+
+#hilobar {z-index:10000; position:fixed; padding:0; left:20px; bottom:20px;}
+.hiloContents {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: center;
+
+  max-width:100%;
+  width:auto;
+  height:96px;
+  overflow: hidden;
+
+  background-color: #fefefe;
+  background-image: -moz-linear-gradient(top, #fefefe, #fefefe);
+  box-shadow: 0px 0px 20px #999;
+  color: #555;
+  border-radius: 6px;
+  text-shadow: 0 0 1px #aaa;
+}
+.hiloProfilePhoto {
+  order: 1;
+  flex-grow: 1;
+
+  padding:10px;
+}
+.hiloMessageBox, .hiloCtaBox {
+  order: 2;
+  flex-grow: 2;
+  flex-basis: auto;
+
+  padding:10px;
+  line-height:20px;
+}
+.messageIt {
+  font-family: 'Open Sans', sans-serif;
+  display: inline-table;
+}
+.theMessage {
+  display:table-cell;
+  font-size:bigger;
+}
+.spacer {
+  display:table-cell;
+  padding:10px;
+}
+.nextBtn {
+  font-family: 'Open Sans', sans-serif;
+  display:table-cell;
+}
+.actions {
+  order: 3;
+  flex-grow: 1;
+  float:right;
+  position:relative;
+
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+
+  top:3px;
+  right:5px;
+}
+.hiloAuthor {
+  display: table-cell;
+  color:#888;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight: bolder;
+}
+.hiloAuthor a {
+  color:#337ab7;
+  text-decoration: none;
+}
+.hiloLink:hover, .hiloClose:hover, .hiloShare:hover {
+  font-weight: bold;
+}
+.hiloLink, .hiloClose, .hiloShare {
+  margin-right:6px;
+  font-size:11px;
+  color: #000;
+  text-decoration: none;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: pointer;
+}
+.hiloLink {
+  position:absolute;
+  bottom:4px;
+  right:14px;
+  margin-right:0px;
+}
+
+
+@media screen and (max-width:767px) {
+  .spacer { padding:3px; }
+  .hiloMessageBox {
+    display:block;
+  }
+  .messageIt {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+

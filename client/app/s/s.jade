@@ -55,7 +55,7 @@
 
 
 .aspect-ratio
-  iframe(src='{{ srcSettings.destUrl }}', frameborder='0')
+  iframe(ng-src='{{srcSettings.destUrl}}', frameborder='0')
 
 script.
   $(document).ready(function() {
@@ -63,7 +63,7 @@ script.
     setTimeout(function() {
       $('#hilobar').show();
       $('.hiloAction').click(function(event) {
-        $('.hiloMessageBox').animate({width:'toggle'},300);
+        $('.hiloMessageBox').animate({width:'toggle'}, 300);
         $('.hiloCtaBox').show();
       });
     }, delay);

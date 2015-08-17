@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('SCtrl', function ($scope) {
+  .controller('SCtrl', function ($scope, $location, $sce) {
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
 
@@ -15,6 +15,6 @@ angular.module('hiloApp')
       ctaText: 'Where to send your free bonus?',
       inputPlaceholder: 'Your Email',
       submitBtnText: 'Go',
-      destUrl: $sce.trustAsResourceUrl('//lenglead.com')
+      destUrl: $sce.trustAsResourceUrl('http://lenglead.com')
     };
   });
