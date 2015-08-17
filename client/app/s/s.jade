@@ -1,0 +1,70 @@
+#hiloDelay(style='display:none')
+  | {{ srcSettings.delay }}
+#hilobar(style='display:none')
+
+  .hiloContents.hidden-xs
+    a.hiloLink(href='hiloUrl') hilo
+    .actions
+      a.hiloClose(href='destUrl') ×
+      a.hiloShare(href='hiloShare')
+        span.glyphicon.glyphicon-retweet
+    span.hiloProfilePhoto
+      a(target='_blank', href='{{ srcSettings.twitterUrl }}')
+        img.img-rounded(src='{{ srcSettings.twitterProfilePicUrl }}')
+    span.hiloMessageBox
+      span.hiloAuthor
+        a(target='_blank', href='{{ srcSettings.twitterUrl }}') {{ srcSettings.author }}
+      span.messageIt
+        span.theMessage
+          | {{ srcSettings.theMessage }}
+        span.spacer
+        span.nextBtn
+          button.btn.btn-primary.btn-lg.hiloAction
+            | {{ srcSettings.actionBtnText }}  
+    .hiloCtaBox(style='display:none')
+      strong {{ srcSettings.ctaText }}
+      form.form.form-inline.form-lg
+        .input-group.input-group-lg
+          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}')
+          span.input-group-btn.input-group-button-lg
+            button.btn.btn-primary.btn-lg.hiloGo(type='button') {{ srcSettings.submitBtnText }}
+
+  .hiloContents.visible-xs
+    a.hiloLink(href='hiloUrl') hilo
+    .actions
+      a.hiloClose(href='destUrl') ×
+      a.hiloShare(href='hiloShare')
+        span.glyphicon.glyphicon-retweet
+    span.hiloMessageBox
+      span.hiloAuthor
+        a(target='_blank', href='{{ srcSettings.twitterUrl }}') Eric Tsang
+      span.messageIt
+        span.theMessage
+          | {{ srcSettings.theMessage }}
+        span.spacer
+        span.nextBtn
+          button.btn.btn-primary.btn-xs.hiloAction(style='height:40px')
+            | {{ srcSettings.actionBtnText }}
+    .hiloCtaBox(style='display:none')
+      strong {{ srcSettings.ctaText }}
+      form.form.form-inline.form-lg
+        .input-group.input-group-lg
+          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}')
+          span.input-group-btn.input-group-button-lg
+            button.btn.btn-primary.btn-lg.hiloGo(type='button') {{ srcSettings.submitBtnText }}
+
+
+.aspect-ratio
+  iframe(src='{{ srcSettings.destUrl }}', frameborder='0')
+
+script.
+  $(document).ready(function() {
+    var delay = parseInt($('#hiloDelay').html(), 10);
+    setTimeout(function() {
+      $('#hilobar').show();
+      $('.hiloAction').click(function(event) {
+        $('.hiloMessageBox').animate({width:'toggle'},300);
+        $('.hiloCtaBox').show();
+      });
+    }, delay);
+  });
