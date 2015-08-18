@@ -10,6 +10,7 @@ var path = require('path');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/mailchimp', require('./api/mailchimp'));
   app.use('/api/srcsettings', require('./api/srcsetting'));
   app.use('/api/users', require('./api/user'));
 

@@ -27,9 +27,9 @@
       strong {{ srcSettings.ctaText }}
       form.form.form-inline.form-lg
         .input-group.input-group-lg
-          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}')
+          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}', ng-model='theEmail')
           span.input-group-btn.input-group-button-lg
-            button.btn.btn-primary.btn-lg.hiloGo(type='button') {{ srcSettings.submitBtnText }}
+            button.btn.btn-primary.btn-lg.hiloGo(type='button', ng-click='subscribe()') {{ srcSettings.submitBtnText }}
 
   .hiloContents.visible-xs
     a.hiloLink(href='/') hilo
@@ -51,9 +51,9 @@
       strong {{ srcSettings.ctaText }}
       form.form.form-inline.form-lg
         .input-group.input-group-lg
-          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}')
+          input.form-control(type='text', placeholder='{{ srcSettings.inputPlaceholder }}', ng-model='theEmail')
           span.input-group-btn.input-group-button-lg
-            button.btn.btn-primary.btn-lg.hiloGo(type='button') {{ srcSettings.submitBtnText }}
+            button.btn.btn-primary.btn-lg.hiloGo(type='button', ng-click='subscribe()') {{ srcSettings.submitBtnText }}
 
 
 .aspect-ratio

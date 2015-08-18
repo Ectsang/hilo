@@ -56,6 +56,9 @@ var all = {
     callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
   },
 
+  mailchimp: {
+    apiKey:       process.env.MAILCHIMP_APIKEY || ''
+  }
 };
 
 // Export the config object based on the NODE_ENV

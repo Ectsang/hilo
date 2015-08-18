@@ -19,9 +19,31 @@ angular.module('hiloApp')
     // };
 
     /**
+     * Subscribes the email to list in mailchimp
+     */
+    $scope.subscribe = function() {
+
+      var listId = $scope.srcSettings.mailchimp.listId;
+      var doubleOptin = false;
+
+      console.log($scope.theEmail, listId, doubleOptin);
+
+      var apiPath = '/api/mailchimp/lists/'+listId+'/subscribe';
+      $http.post(apiPath, { listId: listId, email: $scope.theEmail, doubleOptin: doubleOptin }, {})
+        .success(function(dataFromServer, status, headers, config) {
+          console.log(dataFromServer);
+          console.log(config);
+        })
+        .error(function (err) {
+          console.log('error subscribing', err);
+        });
+    }
+
+
+    /**
      * Returns the trusted src for jade to parse
      */
-    $scope.trustSrc = function (src) {
+    $scope.trustSrc = function(src) {
       // strip https, http
       if (src) {
         src = src.replace('https://', '//').replace('http://', '//');
@@ -50,7 +72,7 @@ angular.module('hiloApp')
     /**
      * Returns src settings for this shortcode
      */
-    function fetchSiteByShortcode () {
+    function fetchSiteByShortcode() {
       $http.get('/api/srcsettings/' + $scope.shortCode)
         .success(function (result) {
           $scope.srcSettings = result;
