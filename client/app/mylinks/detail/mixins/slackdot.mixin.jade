@@ -1,4 +1,6 @@
-mixin slackdot(element, top, right, bottom, left)
-  a
-    span.hilo-slackdot(ng-hide='!showGuides', id='#{element}', class='#{top}#{right}#{bottom}#{left}', ng-click='toggleShowOption("#{element}")')
+mixin slackdot(element, position, velocity)
+  a.hilo-slackdot(
+    ng-hide='!showGuides', id='#{element}',
+    ng-click='toggleShowOption("#{element}")',
+    style='position:#{position}; #{velocity}')
     | &nbsp;&nbsp;&nbsp;&nbsp;

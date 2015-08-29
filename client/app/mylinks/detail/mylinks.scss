@@ -1,8 +1,8 @@
-#hilobar a, #hilobar a:hover {
+#hilobar a, #hilobar a:hover, #hint a, #hint a:hover {
   cursor: pointer;
   user-select: none;
 }
-#hilobar a:hover {
+#hilobar a:hover, #hint a:hover {
   text-decoration: none;
 }
 
@@ -40,13 +40,13 @@
   position: absolute;
 }
 .hilo-slackdot.left {
-  left: -12px;
+  left: -10px;
 }
 .hilo-slackdot.right {
-  right: -12px;
+  right: 0;
 }
 .hilo-slackdot.top {
-  top: -10px;
+  top: 0;
 }
 .hilo-slackdot.bottom {
   bottom: -10px;

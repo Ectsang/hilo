@@ -8,9 +8,23 @@ angular.module('hiloApp')
 
     $scope.showGuides = true;
 
+    $scope.toggleForm = function() {
+      $scope.showForm = !$scope.showForm;
+      // re-show hint
+      $scope.toggleShowOption('hint');
+    };
+
     $scope.templates = {
+      hint: true,
+
       shareUrl: false,
-      twitterProfilePicUrl: false
+      twitterProfilePicUrl: false,
+      author: false,
+      theMessage: false,
+      actionBtn: false,
+      ctaText: false,
+      inputPlaceholder: false,
+      submitBtnText: false
     };
 
     $scope.toggleShowOption = function(elemId) {

@@ -5,9 +5,9 @@ include ./mixins/slackdot.mixin.jade
 
 .col-md-12.editor
   .editor-title
-    h4(style="padding:0; margin:0 0 5px 0;")
+    h4(style="padding:0; margin:0 0 15px 0;")
       | {{ link.meta.title }}
-      br
+
     span.hilo-shortTitle
       | Guides:&nbsp;
     input#guidesSwitcher(
@@ -22,8 +22,14 @@ include ./mixins/slackdot.mixin.jade
 
 
   .editor-detail-info
+    div(ng-hide='!templates.hint')
+      #hint.alert.alert-success(role="alert")
+        | Click on one of these guides to edit
+      +slackdot('hint', 'absolute', 'bottom:30px;')
+
     span.hilo-shortTitle(ng-hide='!templates.shareUrl') Share URL:
-      input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='50', style='font-weight:normal')
+      input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='30', style='font-weight:normal')
+
     span.hilo-shortTitle(ng-hide='!templates.twitterProfilePicUrl') Profile Photo:
       br
       input#hilo-twitterProfilePicUrl(
@@ -37,12 +43,30 @@ include ./mixins/slackdot.mixin.jade
         switch-handle-width="24px"
         style="font-weight:normal")
 
+    span.hilo-shortTitle(ng-hide='!templates.author') Author:
+      input#hilo-author.form-control.form-inline(ng-model='link.author', value='link.author', size='30', style='font-weight:normal')
+
+    span.hilo-shortTitle(ng-hide='!templates.theMessage') Message:
+      input#hilo-theMessage.form-control.form-inline(ng-model='link.theMessage', value='link.theMessage', size='30', style='font-weight:normal')
+
+    span.hilo-shortTitle(ng-hide='!templates.actionBtn') Action Button:
+      input#hilo-actionBtn.form-control.form-inline(ng-model='link.actionBtnText', value='link.actionBtnText', size='30', style='font-weight:normal')
+
+    span.hilo-shortTitle(ng-hide='!templates.ctaText') Call To Action:
+      input#hilo-ctaText.form-control.form-inline(ng-model='link.ctaText', value='link.ctaText', size='30', style='font-weight:normal')
+
+    span.hilo-shortTitle(ng-hide='!templates.inputPlaceholder') Input Placeholder:
+      input#hilo-inputPlaceholder.form-control.form-inline(ng-model='link.inputPlaceholder', value='link.inputPlaceholder', size='30', style='font-weight:normal')
+
+    span.hilo-shortTitle(ng-hide='!templates.submitBtnText') Submit Button Text:
+      input#hilo-submitBtnText.form-control.form-inline(ng-model='link.submitBtnText', value='link.submitBtnText', size='30', style='font-weight:normal')
 
   .editor-action
-    .btn.btn-default.btn-xs
-      | Cancel
-    .btn.btn-primary.btn-xs
-      | Update
+    .btn.btn-primary.btn-block
+      | &nbsp;Update&nbsp;
+    .btn.btn-default.btn-block
+      | &nbsp;Cancel&nbsp;
+
 
 .col-md-12
   //- hilobar
@@ -55,28 +79,39 @@ include ./mixins/slackdot.mixin.jade
         a.hiloClose ×
         a.hiloShare
           span.glyphicon.glyphicon-retweet
-        +slackdot('shareUrl', '', '', 'bottom', '')
+        +slackdot('shareUrl', 'absolute', 'left:-20px')
       span.hiloProfilePhoto
         img#twitterProfilePicUrl.img-rounded(ng-hide='!link.show.twitterProfilePicUrl', src='{{ link.twitterProfilePicUrl }}')
-        +slackdot('twitterProfilePicUrl', 'top', '', '', 'left')
-      span.hiloMessageBox
+        +slackdot('twitterProfilePicUrl', 'absolute', 'left:-10px')
+      span.hiloMessageBox(ng-hide='showForm')
         span.hiloAuthor
-          a#twitterUrl(ng-click='toggleShowOption("twitterUrl")') {{ link.author }}
+          +slackdot('author', 'absolute', 'top:-10px')
+          a {{ link.author }}
+
         span.messageIt
-          span#theMessage.theMessage(ng-click='toggleShowOption("theMessage")')
+          +slackdot('theMessage', 'absolute', 'bottom:16px')
+          span
             | {{ link.theMessage }}
           span.spacer
           span.nextBtn
-            button#actionBtn.btn.btn-primary.btn-lg.hiloAction(ng-click='toggleShowOption("actionBtn")')
+            +slackdot('actionBtn', 'absolute', 'bottom:10px')
+            button.btn.btn-primary.btn-lg.hiloAction(ng-click='toggleForm()')
               | {{ link.actionBtnText }}
-      .hiloCtaBox(style='display:none')
-        strong#ctaText(ng-click='toggleShowOption("ctaText")')
+
+      .hiloCtaBox(ng-hide='!showForm')
+        +slackdot('ctaText', 'absolute', 'top:-10px')
+        strong
           | {{ link.ctaText }}
+
         form.form.form-inline.form-lg
+          +slackdot('inputPlaceholder', 'absolute', 'bottom:10px')
           .input-group.input-group-lg
-            input#inputPlaceholder.form-control(type='text', placeholder='{{ link.inputPlaceholder }}', ng-click='toggleShowOption("inputPlaceholder")', ng-model='theEmail')
+            input.form-control(type='text', placeholder='{{ link.inputPlaceholder }}')
             span.input-group-btn.input-group-button-lg
-              button#submitBtn.btn.btn-primary.btn-lg.hiloGo(type='button', ng-click='toggleShowOption("submitBtn")') {{ link.submitBtnText }}
+              +slackdot('submitBtnText', 'absolute', 'bottom:-10px')
+              button.btn.btn-primary.btn-lg.hiloGo(ng-click='toggleForm()') {{ link.submitBtnText }}
+
+
 
     //- narrow
     .hiloContents.visible-xs
@@ -109,17 +144,13 @@ include ./mixins/slackdot.mixin.jade
       | &nbsp;
     iframe(ng-src='{{ trustSrc(link.destUrl) }}', frameborder='0')
 
-//- script.
-//-   $(document).ready(function() {
-//-     //- $("#guidesSwitcher").on('switchChange.bootstrapSwitch', function(event, state) {
-//-     //-   //- console.log(this); // DOM element
-//-     //-   if (state) {
-//-     //-     $('.hilo-sunscreen').show();
-//-     //-     $('.hilo-slackdot').show();
-//-     //-   } else {
-//-     //-     $('.hilo-sunscreen').hide();
-//-     //-     $('.hilo-slackdot').hide();
-//-     //-   }
-//-     //- });
-//-     //- $("#guidesSwitcher").bootstrapSwitch();
-//-   });
+
+script.
+  $(document).ready(function() {
+    $('.hilo-slackdot').click(function() {
+      $(window).scrollTop(0);
+      $('.editor-detail-info')
+        .css('opacity', 0)
+        .animate({ backgroundColor: "#ffffff", opacity: 1.0 }, 250);
+    });
+  });
