@@ -10,20 +10,33 @@ include ./mixins/slackdot.mixin.jade
       br
     span.hilo-shortTitle
       | Guides:&nbsp;
-      input#guidesSwitcher(
-          type="checkbox"
-          checked="true"
-          data-size="mini"
-          data-on-color="info"
-          data-off-color="default"
-          data-label-width="24px"
-        )
+    input#guidesSwitcher(
+        bs-switch
+        ng-model="showGuides"
+        type="checkbox"
+        switch-active="true"
+        switch-size="mini"
+        switch-animate="true"
+        switch-label-width="24px"
+        switch-handle-width="24px")
+
 
   .editor-detail-info
     span.hilo-shortTitle(ng-hide='!templates.shareUrl') Share URL:
       input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='50', style='font-weight:normal')
-    span.hilo-shortTitle(ng-hide='!templates.shareUrl') Share URL:
-      input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='50', style='font-weight:normal')
+    span.hilo-shortTitle(ng-hide='!templates.twitterProfilePicUrl') Profile Photo:
+      br
+      input#hilo-twitterProfilePicUrl(
+        bs-switch
+        ng-model="link.show.twitterProfilePicUrl"
+        type="checkbox"
+        switch-active="true"
+        switch-size="mini"
+        switch-animate="true"
+        switch-label-width="24px"
+        switch-handle-width="24px"
+        style="font-weight:normal")
+
 
   .editor-action
     .btn.btn-default.btn-xs
@@ -41,15 +54,11 @@ include ./mixins/slackdot.mixin.jade
       .actions
         a.hiloClose ×
         a.hiloShare
-          //- span#shareUrl.hilo-slackdot.bottom(ng-click='toggleShowOption("shareUrl")')
-          //-   | &nbsp;&nbsp;&nbsp;&nbsp;
           span.glyphicon.glyphicon-retweet
         +slackdot('shareUrl', '', '', 'bottom', '')
       span.hiloProfilePhoto
-        a
-          span#shareUrl.hilo-slackdot.bottom(ng-click='toggleShowOption("twitterProfilePicUrl")')
-            | &nbsp;&nbsp;&nbsp;&nbsp;
-          img#twitterProfilePicUrl.img-rounded(src='{{ link.twitterProfilePicUrl }}')
+        img#twitterProfilePicUrl.img-rounded(ng-hide='!link.show.twitterProfilePicUrl', src='{{ link.twitterProfilePicUrl }}')
+        +slackdot('twitterProfilePicUrl', 'top', '', '', 'left')
       span.hiloMessageBox
         span.hiloAuthor
           a#twitterUrl(ng-click='toggleShowOption("twitterUrl")') {{ link.author }}
@@ -96,21 +105,21 @@ include ./mixins/slackdot.mixin.jade
 
   //- iframe of destination
   .aspect-ratio
-    .hilo-sunscreen
+    .hilo-sunscreen(ng-hide='!showGuides')
       | &nbsp;
     iframe(ng-src='{{ trustSrc(link.destUrl) }}', frameborder='0')
 
-script.
-  $(document).ready(function() {
-    $("#guidesSwitcher").on('switchChange.bootstrapSwitch', function(event, state) {
-      //- console.log(this); // DOM element
-      if (state) {
-        $('.hilo-sunscreen').show();
-        $('.hilo-slackdot').show();
-      } else {
-        $('.hilo-sunscreen').hide();
-        $('.hilo-slackdot').hide();
-      }
-    });
-    $("#guidesSwitcher").bootstrapSwitch();
-  });
+//- script.
+//-   $(document).ready(function() {
+//-     //- $("#guidesSwitcher").on('switchChange.bootstrapSwitch', function(event, state) {
+//-     //-   //- console.log(this); // DOM element
+//-     //-   if (state) {
+//-     //-     $('.hilo-sunscreen').show();
+//-     //-     $('.hilo-slackdot').show();
+//-     //-   } else {
+//-     //-     $('.hilo-sunscreen').hide();
+//-     //-     $('.hilo-slackdot').hide();
+//-     //-   }
+//-     //- });
+//-     //- $("#guidesSwitcher").bootstrapSwitch();
+//-   });

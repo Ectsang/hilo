@@ -6,13 +6,19 @@ angular.module('hiloApp')
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
 
+    $scope.showGuides = true;
 
     $scope.templates = {
-      shareUrl: false
+      shareUrl: false,
+      twitterProfilePicUrl: false
     };
 
     $scope.toggleShowOption = function(elemId) {
       console.log(elemId);
+
+      // hide all other templates
+      for (var x in $scope.templates) { $scope.templates[x] = false; }
+
       $scope.templates[elemId] = !$scope.templates[elemId];
     };
 
