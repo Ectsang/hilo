@@ -1,0 +1,116 @@
+//- div(ng-include='"components/navbar/navbar.html"')
+//- http://www.growhack.com/2015/03/12/most-common-demo-mistake-that-leads-your-prospects-to-go-dark/
+
+include ./mixins/slackdot.mixin.jade
+
+.col-md-12.editor
+  .editor-title
+    h4(style="padding:0; margin:0 0 5px 0;")
+      | {{ link.meta.title }}
+      br
+    span.hilo-shortTitle
+      | Guides:&nbsp;
+      input#guidesSwitcher(
+          type="checkbox"
+          checked="true"
+          data-size="mini"
+          data-on-color="info"
+          data-off-color="default"
+          data-label-width="24px"
+        )
+
+  .editor-detail-info
+    span.hilo-shortTitle(ng-hide='!templates.shareUrl') Share URL:
+      input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='50', style='font-weight:normal')
+    span.hilo-shortTitle(ng-hide='!templates.shareUrl') Share URL:
+      input#hilo-shareUrl.form-control.form-inline(ng-model='link.shareUrl.url', value='link.shareUrl.url', size='50', style='font-weight:normal')
+
+  .editor-action
+    .btn.btn-default.btn-xs
+      | Cancel
+    .btn.btn-primary.btn-xs
+      | Update
+
+.col-md-12
+  //- hilobar
+  #hilobar
+
+    //- wide
+    .hiloContents.hidden-xs
+      a.hiloLink hilo
+      .actions
+        a.hiloClose ×
+        a.hiloShare
+          //- span#shareUrl.hilo-slackdot.bottom(ng-click='toggleShowOption("shareUrl")')
+          //-   | &nbsp;&nbsp;&nbsp;&nbsp;
+          span.glyphicon.glyphicon-retweet
+        +slackdot('shareUrl', '', '', 'bottom', '')
+      span.hiloProfilePhoto
+        a
+          span#shareUrl.hilo-slackdot.bottom(ng-click='toggleShowOption("twitterProfilePicUrl")')
+            | &nbsp;&nbsp;&nbsp;&nbsp;
+          img#twitterProfilePicUrl.img-rounded(src='{{ link.twitterProfilePicUrl }}')
+      span.hiloMessageBox
+        span.hiloAuthor
+          a#twitterUrl(ng-click='toggleShowOption("twitterUrl")') {{ link.author }}
+        span.messageIt
+          span#theMessage.theMessage(ng-click='toggleShowOption("theMessage")')
+            | {{ link.theMessage }}
+          span.spacer
+          span.nextBtn
+            button#actionBtn.btn.btn-primary.btn-lg.hiloAction(ng-click='toggleShowOption("actionBtn")')
+              | {{ link.actionBtnText }}
+      .hiloCtaBox(style='display:none')
+        strong#ctaText(ng-click='toggleShowOption("ctaText")')
+          | {{ link.ctaText }}
+        form.form.form-inline.form-lg
+          .input-group.input-group-lg
+            input#inputPlaceholder.form-control(type='text', placeholder='{{ link.inputPlaceholder }}', ng-click='toggleShowOption("inputPlaceholder")', ng-model='theEmail')
+            span.input-group-btn.input-group-button-lg
+              button#submitBtn.btn.btn-primary.btn-lg.hiloGo(type='button', ng-click='toggleShowOption("submitBtn")') {{ link.submitBtnText }}
+
+    //- narrow
+    .hiloContents.visible-xs
+      a.hiloLink(href='/') hilo
+      .actions
+        a.hiloClose(href='{{ trustSrc(link.destUrl) }}') ×
+        a.hiloShare(target='_blank', href='{{ link.shareUrl_ }}')
+          span.glyphicon.glyphicon-retweet
+      span.hiloMessageBox
+        span.hiloAuthor
+          a(target='_blank', href='{{ link.twitterUrl }}') Eric Tsang
+        span.messageIt
+          span.theMessage
+            | {{ link.theMessage }}
+          span.spacer
+          span.nextBtn
+            button.btn.btn-primary.btn-xs.hiloAction(style='height:40px')
+              | {{ link.actionBtnText }}
+      .hiloCtaBox(style='display:none')
+        strong {{ link.ctaText }}
+        form.form.form-inline.form-lg
+          .input-group.input-group-lg
+            input.form-control(type='text', placeholder='{{ link.inputPlaceholder }}', ng-model='theEmail')
+            span.input-group-btn.input-group-button-lg
+              button.btn.btn-primary.btn-lg.hiloGo(type='button', ng-click='subscribe()') {{ link.submitBtnText }}
+
+  //- iframe of destination
+  .aspect-ratio
+    .hilo-sunscreen
+      | &nbsp;
+    iframe(ng-src='{{ trustSrc(link.destUrl) }}', frameborder='0')
+
+script.
+  $(document).ready(function() {
+    $("#guidesSwitcher").on('switchChange.bootstrapSwitch', function(event, state) {
+      //- console.log(this); // DOM element
+      if (state) {
+        $('.hilo-sunscreen').show();
+        $('.hilo-slackdot').show();
+      } else {
+        $('.hilo-sunscreen').hide();
+        $('.hilo-slackdot').hide();
+      }
+    });
+    $("#guidesSwitcher").bootstrapSwitch();
+  });

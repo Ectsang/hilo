@@ -2,10 +2,16 @@
 
 angular.module('hiloApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }];
+    $scope.menu = [
+      {
+        'title': 'Dashboard',
+        'link': '/'
+      },
+      {
+        'title': 'My Links',
+        'link': '/mylinks'
+      }
+    ];
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;

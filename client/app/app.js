@@ -6,6 +6,7 @@ angular.module('hiloApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap'
+  // 'frapontillo.bootstrap-switch'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

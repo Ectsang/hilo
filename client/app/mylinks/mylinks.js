@@ -5,7 +5,12 @@ angular.module('hiloApp')
     $stateProvider
       .state('mylinks', {
         url: '/mylinks',
-        templateUrl: 'app/mylinks/mylinks.html',
+        templateUrl: 'app/mylinks/list/mylinks.html',
         controller: 'MylinksCtrl'
+      })
+      .state('mylinksDetail', {
+        url: '/mylinks/:id',
+        templateUrl: 'app/mylinks/detail/mylinks.html',
+        controller: 'MylinksDetailCtrl'
       });
   });
