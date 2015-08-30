@@ -9,8 +9,8 @@ router.get('/', controller.index);
 router.get('/i/:id', controller.show);
 router.get('/:code', controller.showByShortcode);
 router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
+router.put('/:code', controller.update);
+router.patch('/:code', controller.patch);
 router.delete('/:id', controller.destroy);
 
 module.exports = router;

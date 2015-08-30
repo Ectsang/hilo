@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http) {
+  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http, cfpLoadingBar) {
 
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
@@ -28,8 +28,6 @@ angular.module('hiloApp')
     };
 
     $scope.toggleShowOption = function(elemId) {
-      console.log(elemId);
-
       // hide all other templates
       for (var x in $scope.templates) { $scope.templates[x] = false; }
 
@@ -52,15 +50,36 @@ angular.module('hiloApp')
 
 
     /**
-     * Returns src settings for this shortcode
+     *
+     */
+    $scope.updateLink = function() {
+      cfpLoadingBar.start();
+      $http.patch('/api/srcsettings/' + $scope.shortCode, $scope.link)
+        .success(function (result) {
+          console.log('patched link', result);
+        })
+        .error(function (err){
+          console.log('error', err);
+        })
+        .finally(function() {
+          cfpLoadingBar.complete();
+        });
+    }
+
+
+    /**
+     * Returns src settings for this shortCode
      */
     function fetchLink() {
-      $scope.loading = true;
+      cfpLoadingBar.start();
       $http.get('/api/srcsettings/' + $scope.shortCode)
         .success(function (result) {
+          // if result.owner is not === logged in user,
+          // $state.go('main');
+
           $scope.link = result;
 
-          console.log('result', $scope.link);
+          console.log('fetched link', $scope.link);
         })
         .error(function (err) {
           console.error('err', err);
@@ -70,7 +89,7 @@ angular.module('hiloApp')
           }
         })
         .finally(function() {
-          $scope.loading = false;
+          cfpLoadingBar.complete();
         });
     }
 

@@ -5,10 +5,10 @@ include ./mixins/slackdot.mixin.jade
 
 .col-md-12.editor
   .editor-title
-    h4(style="padding:0; margin:0 0 15px 0;")
-      | {{ link.meta.title }}
+    h4(ng-model="link.meta.title", editable-text="link.meta.title")
+      | {{ link.meta.title || 'New Untitled Campaign' }}
 
-    span.hilo-shortTitle
+    div.hilo-shortTitle
       | Guides:&nbsp;
     input#guidesSwitcher(
         bs-switch
@@ -62,9 +62,9 @@ include ./mixins/slackdot.mixin.jade
       input#hilo-submitBtnText.form-control.form-inline(ng-model='link.submitBtnText', value='link.submitBtnText', size='30', style='font-weight:normal')
 
   .editor-action
-    .btn.btn-primary.btn-block
+    a.btn.btn-primary.btn-block(ng-click='updateLink()')
       | &nbsp;Update&nbsp;
-    .btn.btn-default.btn-block
+    a.btn.btn-default.btn-block(href='/mylinks')
       | &nbsp;Cancel&nbsp;
 
 

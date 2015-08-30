@@ -6,7 +6,9 @@ angular.module('hiloApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'frapontillo.bootstrap-switch'
+  'frapontillo.bootstrap-switch',
+  'xeditable',
+  'angular-loading-bar'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -40,6 +42,10 @@ angular.module('hiloApp', [
         }
       }
     };
+  })
+
+  .run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
   })
 
   .run(function ($rootScope, $location, Auth) {
