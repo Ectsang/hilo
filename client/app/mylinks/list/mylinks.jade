@@ -1,42 +1,45 @@
 div(ng-include='"components/navbar/navbar.html"')
 
-.col-md-12
-  h3 My Links
+.col-md-1
+  | &nbsp;
+.col-md-10
+  h3.hiloPageTitle My Links
+  .hiloCreateLink.btn.btn-primary(ng-click='open()') New Link
 
   table.table.table-hilo.table-fixed-width
     thead
       th.px-30
         input(type='checkbox' ng-model='selectAllState' ng-click='selectAllLinks()')
-      th.px-70(ng-click="orderByField='status'; reverseSort = !reverseSort") Status
+      th.px-100(ng-click="orderByField='startDate'; reverseSort = !reverseSort") Start Date
         i.hilo-align-top.fa.fa-sort-desc
-      //- th.px-100(ng-click="orderByField='startDate'; reverseSort = !reverseSort") Start Date
-      //-   i.hilo-align-top.fa.fa-sort-desc
+      th(ng-click="orderByField='title'; reverseSort = !reverseSort") Title
+        i.hilo-align-top.fa.fa-sort-desc
       th.pc-20(ng-click="orderByField='views'; reverseSort = !reverseSort") Views
         i.hilo-align-top.fa.fa-sort-desc
       th.pc-20(ng-click="orderByField='clicks'; reverseSort = !reverseSort") Clicks
         i.hilo-align-top.fa.fa-sort-desc
       th.pc-20(ng-click="orderByField='leads'; reverseSort = !reverseSort") Leads
         i.hilo-align-top.fa.fa-sort-desc
-      th(ng-click="orderByField='conversionRate'; reverseSort = !reverseSort") Conversion Rate
+      th(ng-click="orderByField='name'; reverseSort = !reverseSort") Action
         i.hilo-align-top.fa.fa-sort-desc
-      th(ng-click="orderByField='name'; reverseSort = !reverseSort") Campaign
-        i.hilo-align-top.fa.fa-sort-desc
-      th(ng-click="orderByField='name'; reverseSort = !reverseSort")
+
+
     tbody
       tr(ng-repeat='link in links|orderBy:orderByField:reverseSort')
         td
           input(type='checkbox' ng-model='link.selected' ng-click='selectLink(link)')
-        td {{ link.shortCode }}
-        //- td {{ link.startDate | date:'d MMM yyyy' }}
+        td {{ link.startDate | date:'d MMM yyyy' }}
+        td.name
+          | {{ link.meta.title }}
         td {{ link.meta.clicks }}
         td {{ link.meta.leads }}
         td {{ link.meta.conversionRate }}
-        td.name
-          a(target='_blank', href='/s/{{ link.shortCode }}')
-            | {{ link.meta.title }}
         td
           a(href='/mylinks/{{ link.shortCode }}')
             | edit
+          | &nbsp;|&nbsp;
+          a(target='_blank', href='/s/{{ link.shortCode }}')
+            | preview
 
       tr(ng-if='links.length === 0 && !loading')
         td.text-center(colspan='8')
@@ -44,3 +47,5 @@ div(ng-include='"components/navbar/navbar.html"')
       tr(ng-if='loading')
         td.text-center(colspan='8')
           span Loading ...
+.col-md-1
+  | &nbsp;

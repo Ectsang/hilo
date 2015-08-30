@@ -14,8 +14,9 @@
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
-      <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-      <link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css' type='text/css' media='all' />
+      <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+      <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+      <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.min.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -62,7 +63,10 @@
       <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
       <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
       <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-      <script src='bower_components/angular-loading-bar/build/loading-bar.min.js'></script>
+      <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+      <script src="bower_components/angular-translate/angular-translate.js"></script>
+      <script src="bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
+      <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -80,6 +84,8 @@
           <script src="app/admin/admin.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/mylinks/create/create.controller.js"></script>
+          <script src="app/mylinks/detail/modals/alertsave/alertsave.controller.js"></script>
           <script src="app/mylinks/detail/mylinks.controller.js"></script>
           <script src="app/mylinks/list/mylinks.controller.js"></script>
           <script src="app/mylinks/mylinks.js"></script>

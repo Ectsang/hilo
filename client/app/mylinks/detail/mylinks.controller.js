@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http, cfpLoadingBar) {
+  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http, $rootScope, $modal, cfpLoadingBar) {
 
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
@@ -49,14 +49,43 @@ angular.module('hiloApp')
     };
 
 
+    // Catches back button globally
+    $scope.$on('$locationChangeStart', function(event) {
+      if (!$scope.isAuthenticated) {
+
+        event.preventDefault();
+
+        var size;
+        var modalInstance = $modal.open({
+          templateUrl: 'app/mylinks/detail/modals/alertsave/alertsave.html',
+          controller: 'AlertsaveCtrl',
+          size: size,
+          resolve: {
+            items: function () {
+              return;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+        }, function () {
+          console.log('Modal dismissed at: ' + new Date());
+        });
+
+
+      }
+    });
+
+
     /**
-     *
+     * Patches link with updated data
      */
     $scope.updateLink = function() {
       cfpLoadingBar.start();
-      $http.patch('/api/srcsettings/' + $scope.shortCode, $scope.link)
+      $http.put('/api/srcsettings/' + $scope.shortCode, $scope.link)
         .success(function (result) {
-          console.log('patched link', result);
+          console.log('updated link', result);
         })
         .error(function (err){
           console.log('error', err);
