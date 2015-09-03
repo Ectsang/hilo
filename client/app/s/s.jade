@@ -11,11 +11,11 @@
       a.hiloShare(target='_blank', href='{{ srcSettings.shareUrl_ }}')
         span.glyphicon.glyphicon-retweet
     span.hiloProfilePhoto
-      a(target='_blank', href='{{ srcSettings.twitterUrl }}')
-        img.img-rounded(src='{{ srcSettings.twitterProfilePicUrl }}')
+      a(target='_blank', href='{{ srcSettings.profileUrl_ }}')
+        img.img-rounded(src='{{ srcSettings.owner.profilePicUrl }}')
     span.hiloMessageBox
       span.hiloAuthor
-        a(target='_blank', href='{{ srcSettings.twitterUrl }}') {{ srcSettings.author }}
+        a(target='_blank', href='{{ srcSettings.profileUrl_ }}') {{ srcSettings.author }}
       span.messageIt
         span.theMessage
           | {{ srcSettings.theMessage }}
@@ -39,7 +39,7 @@
         span.glyphicon.glyphicon-retweet
     span.hiloMessageBox
       span.hiloAuthor
-        a(target='_blank', href='{{ srcSettings.twitterUrl }}') Eric Tsang
+        a(target='_blank', href='{{ srcSettings.profileUrl_ }}') Eric Tsang
       span.messageIt
         span.theMessage
           | {{ srcSettings.theMessage }}

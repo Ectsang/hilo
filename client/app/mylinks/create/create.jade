@@ -1,47 +1,17 @@
 .modal-header
-  h3 New Project
+  h3 New Campaign
 .modal-body.modal-two-col
-  div(ng-show='cacheLoading').lynk-loading-spinner-holder.modal-holder
-    div.lynk-loading-spinner
-      img(src='assets/images/loader.gif')
+
   form.form(name='form', ng-submit='ok(form)', novalidate='')
-    .col-md-6
+    .col-md-12
       .form-group(ng-class='{ "has-success": form.name.$valid && submitted,\
-      "has-error": form.name.$invalid && submitted }')
-        label Project Name
+        "has-error": form.name.$invalid && submitted }')
+        label Paste the URL here
           span.required *
-        input.form-control(type='text', name='name', placeholder='Describe the project', ng-model='newProject.name', required='')
+        input.form-control(type='text', name='name', placeholder='http://...', ng-model='link.url', required='')
         p.help-block(ng-show='form.name.$error.required && submitted')
-          | A project name is required
-      .form-group
-        label Client Case Code
-        input.form-control(type='text', name='description', placeholder='Add client reference (optional)', ng-model='newProject.clientCaseCode')
-      .form-group
-        label Region
-          span.required *
-        tags-input(name='region', ng-model='newProject.region', key-property='_id', display-property='display', replace-spaces-with-dashes='false', add-from-autocomplete-only='true', placeholder='Type to add a region')
-          auto-complete(source='lookupRegion($query)', min-length='1')
-      .form-group
-        label Industry
-          span.required *
-        tags-input(name='industries', ng-model='newProject.industries', key-property='_id', display-property='display', replace-spaces-with-dashes='false', add-from-autocomplete-only='true', placeholder='Type to add industries')
-          auto-complete(source='lookupIndustry($query)', min-length='1')
-    .col-md-6
-      .form-group
-        label Account
-          span.required *
-        tags-input(name='account', ng-model='newProject.account', key-property='_id', display-property='name', replace-spaces-with-dashes='false', add-from-autocomplete-only='true', placeholder='Type to add account', max-tags='1')
-          auto-complete(source='lookupAccount($query)', min-length='1')
-      .form-group
-        label Clients
-          span.required *
-        tags-input(name='clients', ng-model='newProject.clients', key-property='objectId', display-property='name', replace-spaces-with-dashes='false', add-from-autocomplete-only='true', placeholder='Type to add clients')
-          auto-complete(source='lookupClient($query)', min-length='1')
-      .form-group
-        label Topics
-          span
-        tags-input(name='topics', ng-model='newProject.topics', replace-spaces-with-dashes='false', add-from-autocomplete-only='true', placeholder='Type to add topics')
-          auto-complete(source='lookupTopic($query)', min-length='1')
+          | A campaign name is required
+
     .clearfix
     .modal-footer
       button.btn.btn-primary.pull-right(type='submit') Done

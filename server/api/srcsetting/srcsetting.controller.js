@@ -1,11 +1,21 @@
 'use strict';
 
 var _ = require('lodash');
+var request = require('superagent');
+var cheerio = require('cheerio');
+
 var Srcsetting = require('./srcsetting.model');
 
 // Get list of srcsettings
 exports.index = function(req, res) {
   Srcsetting.find(function (err, srcsettings) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(srcsettings);
+  });
+};
+
+exports.listMine = function(req, res) {
+  Srcsetting.find({ owner: req.params.id }, function (err, srcsettings) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(srcsettings);
   });
@@ -22,12 +32,38 @@ exports.show = function(req, res) {
 
 // Get a single srcsetting by shortCode
 exports.showByShortcode = function(req, res) {
+  // Srcsetting.findOne({ shortCode: req.params.code }, function (err, srcsetting) {
+  //   if(err) { return handleError(res, err); }
+  //   if(!srcsetting) { return res.status(404).json({ success: false, code: 404, message: 'Shortcode not found'}); }
+  //   return res.json(srcsetting);
+  // });
+  Srcsetting.findOne({ shortCode: req.params.code })
+    .populate('owner')
+    .exec(function (err, srcsetting) {
+      if(err) { return handleError(res, err); }
+      if(!srcsetting) { return res.status(404).json({ success: false, code: 404, message: 'Shortcode not found'}); }
+      return res.json(srcsetting);
+    });
+};
+
+exports.checkShortcode = function(req, res) {
   Srcsetting.findOne({ shortCode: req.params.code }, function (err, srcsetting) {
     if(err) { return handleError(res, err); }
-    if(!srcsetting) { return res.status(404).json({ success: false, code: 404, message: 'Shortcode not found'}); }
-    return res.json(srcsetting);
+    if(srcsetting) { return res.status(404).json({ success: false, code: 404, message: 'Shortcode is a duplicate'}); }
+    return res.json({ success: true, code: 200, shortCode: req.params.code });
   });
-};
+}
+
+exports.fetchTitleOf = function(req, res) {
+  var apiCall = decodeURIComponent(req.params.url);
+  request
+  .get(apiCall)
+  .end(function(err, response) {
+    if(err) { return handleError(res, err); }
+    var $ = cheerio.load(response.text);
+    return res.json({ success:true, code: 200, htmlTitle: $('title').text() });
+  });
+}
 
 // Creates a new srcsetting in the DB.
 exports.create = function(req, res) {

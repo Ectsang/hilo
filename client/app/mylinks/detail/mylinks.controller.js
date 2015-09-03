@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http, $rootScope, $modal, cfpLoadingBar) {
+  .controller('MylinksDetailCtrl', function ($scope, $sce, $location, $state, $http, $rootScope, $modal, Auth, cfpLoadingBar) {
 
     var path = $location.path();
     $scope.shortCode = (path.split('/'))[path.split('/').length - 1];
@@ -72,10 +72,9 @@ angular.module('hiloApp')
         }, function () {
           console.log('Modal dismissed at: ' + new Date());
         });
-
-
       }
     });
+
 
 
     /**
@@ -104,7 +103,10 @@ angular.module('hiloApp')
       $http.get('/api/srcsettings/' + $scope.shortCode)
         .success(function (result) {
           // if result.owner is not === logged in user,
-          // $state.go('main');
+          if (Auth.getCurrentUser()._id !== result.owner._id) {
+            $state.go('main');
+            return;
+          }
 
           $scope.link = result;
 
@@ -112,7 +114,7 @@ angular.module('hiloApp')
         })
         .error(function (err) {
           console.error('err', err);
-          if (err && err.code === 404) {
+          if (err) {
             $state.go('main');
             return;
           }

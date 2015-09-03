@@ -5,8 +5,8 @@ include ./mixins/slackdot.mixin.jade
 
 .col-md-12.editor
   .editor-title
-    h4(ng-model="link.meta.title", editable-text="link.meta.title")
-      | {{ link.meta.title || 'New Untitled Campaign' }}
+    h4(ng-model="link.title", editable-text="link.title")
+      | {{ link.title || 'New Untitled Campaign' }}
 
     div.hilo-shortTitle
       | Guides:&nbsp;
@@ -81,7 +81,7 @@ include ./mixins/slackdot.mixin.jade
           span.glyphicon.glyphicon-retweet
         +slackdot('shareUrl', 'absolute', 'left:-20px')
       span.hiloProfilePhoto
-        img#twitterProfilePicUrl.img-rounded(ng-hide='!link.show.twitterProfilePicUrl', src='{{ link.twitterProfilePicUrl }}')
+        img#twitterProfilePicUrl.img-rounded(ng-hide='!link.show.twitterProfilePicUrl', src='{{ link.owner.profilePicUrl }}')
         +slackdot('twitterProfilePicUrl', 'absolute', 'left:-10px')
       span.hiloMessageBox(ng-hide='showForm')
         span.hiloAuthor

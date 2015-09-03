@@ -25,3 +25,44 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 's/s.scss';
 @import 'modal/modal.scss';
 // endinjector
+
+
+.table-fixed-width {
+  table-layout: fixed;
+  width: 100%;
+  th.px-20 { width: 20px; }
+  th.px-30 { width: 30px; }
+  th.px-40 { width: 40px; }
+  th.px-50 { width: 50px; }
+  th.px-60 { width: 60px; }
+  th.px-70 { width: 70px; }
+  th.px-80 { width: 80px; }
+  th.px-90 { width: 90px; }
+  th.px-100 { width: 100px; }
+  th.px-110 { width: 110px; }
+  th.px-120 { width: 120px; }
+  th.px-130 { width: 130px; }
+  th.px-150 { width: 150px; }
+  th.px-170 { width: 170px; }
+  th.px-200 { width: 200px; }
+  th.pc-10 { width: 10%; }
+  th.pc-12 { width: 12%; }
+  th.pc-15 { width: 15%; }
+  th.pc-20 { width: 20%; }
+  th.pc-25 { width: 25%; }
+  th.pc-30 { width: 30%; }
+  th.pc-40 { width: 40%; }
+
+  th:hover {
+    cursor: pointer;
+  }
+  .warning {
+    color: #E4DF0F;
+  }
+  .success {
+    color: $brand-primary;
+  }
+  .danger {
+    color: $brand-danger;
+  }
+}

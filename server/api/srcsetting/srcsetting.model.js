@@ -5,13 +5,14 @@ var mongoose = require('mongoose'),
     User = require('../user/user.model')
 
 var SrcsettingSchema = new Schema({
-  owner: [User],
+  owner: { type: Schema.ObjectId, ref: 'User' },
+  createdDate: Date,
+  modifiedDate: Date,
 
   shortCode: String,
   delay: Number,
-  twitterUser: String,
-  twitterUrl: String,
-  twitterProfilePicUrl: String,
+  twitter: {},
+  facebook: {},
   author: String,
   theMessage: String,
   actionBtnText: String,
@@ -19,21 +20,16 @@ var SrcsettingSchema = new Schema({
   inputPlaceholder: String,
   submitBtnText: String,
   destUrl: String,
-  shareUrl: {
-    text: String,
-    url: String,
-    hashtags: [],
-    via: String
-  },
+  title: String,
+
   mailchimp: {
     listId: String,
     apiKey: String
   },
-  meta: {
-    title: String
-  },
+
   show: {
-    twitterProfilePicUrl: Boolean
+    twitterProfilePicUrl: Boolean,
+    facebookProfilePicUrl: Boolean
   }
 });
 

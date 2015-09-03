@@ -1,8 +1,14 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MylinksCtrl', function ($scope, $state, $modal, $http) {
+  .controller('MylinksCtrl', function ($scope, $rootScope, $state, $modal, $http, Auth) {
 
+    // Kick out those who don't belong
+    var currentUser = Auth.getCurrentUser();
+    if (!currentUser.name) {
+      $state.go('main');
+      return;
+    }
 
     /**
      * Open modal
@@ -16,8 +22,7 @@ angular.module('hiloApp')
           items: function () {
             return $scope.items;
           }
-        },
-        // windowClass: 'modal-center'
+        }
       });
 
       modalInstance.result.then(function (selectedItem) {
@@ -27,13 +32,16 @@ angular.module('hiloApp')
       });
     };
 
+    $rootScope.$on('rootScope:newLink', function (event, args) {
+      fetchLinks();
+    });
 
     /**
      * Returns src settings for this shortcode
      */
     function fetchLinks() {
       $scope.loading = true;
-      $http.get('/api/srcsettings')
+      $http.get('/api/srcsettings/list/' + Auth.getCurrentUser()._id)
         .success(function (result) {
           $scope.links = result;
 
