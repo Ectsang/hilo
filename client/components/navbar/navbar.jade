@@ -24,7 +24,9 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
           a(href='/login') Login
 
         li(ng-show='isLoggedIn()')
-          p.navbar-text Hello {{ getCurrentUser().name }}
+          a(href='/' style='padding:0')
+            p.navbar-text {{ getCurrentUser().name }}
+            img(src='{{ getCurrentUser().profilePicUrl }}' style='width:50px;height:50px')
 
         li(ng-show='isLoggedIn()', ng-class='{active: isActive("/settings")}')
           a(href='/settings')

@@ -14,21 +14,27 @@ exports.setup = function (User, config) {
       if (err) {
         return done(err);
       }
+
       if (!user) {
         user = new User({
           name: profile.displayName,
           username: profile.username,
           role: 'user',
           provider: 'twitter',
-          twitter: profile._json
+          twitter: profile._json,
+
+          profilePicUrl: profile.photos[0].value.replace('_normal', '_bigger')
         });
-        user.save(function(err) {
-          if (err) return done(err);
-          done(err, user);
-        });
+
       } else {
-        return done(err, user);
+        user.profilePicUrl = profile.photos[0].value.replace('_normal', '_bigger');
       }
+
+      user.save(function(err) {
+        if (err) return done(err);
+        done(err, user);
+      });
+
     });
     }
   ));

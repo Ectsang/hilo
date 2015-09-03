@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, Auth) {
 
-    console.log($scope);
+    $scope.user = Auth.getCurrentUser();
+    console.log($scope.user);
 
   });
