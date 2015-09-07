@@ -4,13 +4,14 @@
 
   form.form(name='form', ng-submit='ok(form)', novalidate='')
     .col-md-12
-      .form-group(ng-class='{ "has-success": form.name.$valid && submitted,\
-        "has-error": form.name.$invalid && submitted }')
+      .form-group(ng-class='{ "has-success": form.url.$valid && submitted,\
+        "has-error": form.url.$invalid && submitted }')
         label Paste the URL here
           span.required *
-        input.form-control(type='text', name='name', placeholder='http://...', ng-model='link.url', required='')
-        p.help-block(ng-show='form.name.$error.required && submitted')
-          | A campaign name is required
+        input.form-control(type='text', name='url', placeholder='http://...', ng-model='link.url', required='')
+        p.help-block(ng-show='form.url.$error.required && submitted')
+          | A URL is required
+        div(flash-message='5000')
 
     .clearfix
     .modal-footer

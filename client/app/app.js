@@ -8,7 +8,8 @@ angular.module('hiloApp', [
   'ui.bootstrap',
   'frapontillo.bootstrap-switch',
   'xeditable',
-  'angular-loading-bar'
+  'angular-loading-bar',
+  'flash'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('MylinksCtrl', function ($scope, $rootScope, $state, $modal, $http, Auth) {
+  .controller('MylinksCtrl', function ($scope, $rootScope, $location, $state, $modal, $http, Auth) {
 
     // Kick out those who don't belong
     var currentUser = Auth.getCurrentUser();
@@ -33,7 +33,7 @@ angular.module('hiloApp')
     };
 
     $rootScope.$on('rootScope:newLink', function (event, args) {
-      fetchLinks();
+      $location.path('/mylinks/' + args);
     });
 
     /**

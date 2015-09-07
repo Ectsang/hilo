@@ -56,10 +56,14 @@ exports.checkShortcode = function(req, res) {
 
 exports.fetchTitleOf = function(req, res) {
   var apiCall = decodeURIComponent(req.params.url);
+  // console.log('getting', apiCall);
   request
   .get(apiCall)
   .end(function(err, response) {
     if(err) { return handleError(res, err); }
+    if(response.headers && response.headers['x-frame-options']) {
+      return res.status(403).json({ success:false, code:403, message:'cannot load url in iframe' })
+    }
     var $ = cheerio.load(response.text);
     return res.json({ success:true, code: 200, htmlTitle: $('title').text() });
   });

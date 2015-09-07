@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('hiloApp')
-  .controller('CreateCtrl', function ($scope, $location, $state, $http, $rootScope, $modalInstance, Auth) {
+  .controller('CreateCtrl', function ($scope, $location, $state, $http, $rootScope, $modalInstance, Flash, Auth) {
 
     var N = 4;
+
 
     /**
      * returns a random string of n chars
@@ -61,6 +62,12 @@ angular.module('hiloApp')
       return promise;
     }
 
+    function prepUrl(url) {
+      url = url.replace('https://', '//').replace('http://', '//');
+      if (url.slice(0,2)) url = '//' + url;
+      return url;
+    }
+
     /**
      * Submits the form and create the srcsetting
      */
@@ -97,7 +104,7 @@ angular.module('hiloApp')
               ctaText: 'Get your free ebook now',
               inputPlaceholder: 'Your email',
               submitBtnText: 'Submit',
-              destUrl: $scope.link.url,
+              destUrl: prepUrl($scope.link.url),
               title: result.data.htmlTitle,
               mailchimp: {
                 listId: '', // fetch from attached mailchimp object
@@ -146,7 +153,7 @@ angular.module('hiloApp')
                 console.log(status);
                 console.log(config);
 
-                $rootScope.$emit('rootScope:newLink', 'Create new link - Successful');
+                $rootScope.$emit('rootScope:newLink', newLink.shortCode);
 
                 $modalInstance.close($scope.link);
 
@@ -166,8 +173,15 @@ angular.module('hiloApp')
                   $modalInstance.close($scope.link);
                 }
             });
+          },
+          function (err) {
+            console.log('title err', err);
+            Flash.create('danger', 'Sorry - the website does not allow this page to be used in an iframe. Please try another.', 'custom-class');
           });
-        })
+        },
+        function (err) {
+          console.log('shortcode err', err);
+        });
 
 
       } else {
