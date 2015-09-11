@@ -8,6 +8,8 @@ angular.module('hiloApp')
 
     $scope.showGuides = true;
 
+    $scope.confirmed = false;
+
     $scope.toggleForm = function() {
       $scope.showForm = !$scope.showForm;
       // re-show hint
@@ -27,10 +29,12 @@ angular.module('hiloApp')
       submitBtnText: false
     };
 
+
     $scope.toggleShowOption = function(elemId) {
       // hide all other templates
       for (var x in $scope.templates) { $scope.templates[x] = false; }
 
+      // show only template of elemId
       $scope.templates[elemId] = !$scope.templates[elemId];
     };
 
@@ -49,26 +53,36 @@ angular.module('hiloApp')
     };
 
 
-    // Catches back button globally
-    $scope.$on('$locationChangeStart', function(event) {
-      if (!$scope.isAuthenticated) {
+    /**
+     * Catches back button globally
+     */
+    $scope.$on('$locationChangeStart', function(event, next, current) {
+      if (!$scope.isAuthenticated && !$scope.confirmed) {
 
         event.preventDefault();
 
-        var size;
+        var size = 'md';
         var modalInstance = $modal.open({
           templateUrl: 'app/mylinks/detail/modals/alertsave/alertsave.html',
           controller: 'AlertsaveCtrl',
           size: size,
           resolve: {
-            items: function () {
-              return;
+            link: function () {
+              return $scope.link;
+            },
+            next: function () {
+              return next;
             }
           }
         });
 
-        modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
+        modalInstance.result.then(function (result) {
+          // if result is a link
+          if (result && result.length) {
+            $scope.confirmed = !$scope.confirmed;
+            $location.path('/mylinks');
+          }
+
         }, function () {
           console.log('Modal dismissed at: ' + new Date());
         });
