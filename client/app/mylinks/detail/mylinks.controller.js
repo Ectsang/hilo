@@ -61,7 +61,7 @@ angular.module('hiloApp')
 
         event.preventDefault();
 
-        var size = 'md';
+        var size = 'sm';
         var modalInstance = $modal.open({
           templateUrl: 'app/mylinks/detail/modals/alertsave/alertsave.html',
           controller: 'AlertsaveCtrl',
